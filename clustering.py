@@ -3,6 +3,7 @@ import tensorflow as tf
 from sklearn.cluster import KMeans, DBSCAN
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import silhouette_score
+from sklearn.cluster import AgglomerativeClustering
 
 # --- CONFIG ---
 DATASET_FILE = "clustering_dataset.npy"
@@ -46,6 +47,18 @@ print("Extracting neural features...")
 encoded_features = encoder.predict(data_scaled)
 nn_labels = KMeans(n_clusters=N_CLUSTERS, n_init=10).fit_predict(encoded_features)
 
+# --- HIERARCHICAL CLUSTERING ---
+print("Running Hierarchical Clustering...")
+
+hc = AgglomerativeClustering(
+    n_clusters=None, 
+    distance_threshold=150, 
+    linkage='ward'
+)
+hc_labels = hc.fit_predict(data_scaled)
+n_found = len(np.unique(hc_labels))
+print(f"Hierarchical complete. Found {n_found} clusters.")
+
 # --- EVALUATION ---
 def get_score(name, labels):
     mask = labels != -1 #ignore DBSCAN noise
@@ -58,7 +71,12 @@ def get_score(name, labels):
 get_score("K-Means", kmeans_labels)
 get_score("DBSCAN", dbscan_labels)
 get_score("Neural Net", nn_labels)
+get_score("Hierarchical", hc_labels)
 
 # --- SAVE ---
-np.savez("cluster_results.npz", kmeans=kmeans_labels, dbscan=dbscan_labels, nn=nn_labels)
+np.savez("cluster_results.npz", 
+         kmeans=kmeans_labels, 
+         dbscan=dbscan_labels, 
+         nn=nn_labels, 
+         hc=hc_labels)
 print("Saved labels to cluster_results.npz")

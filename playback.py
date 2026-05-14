@@ -6,7 +6,7 @@ import os
 RESULTS_FILE = "cluster_results.npz"
 IMG_DIR = "blob_images"
 FPS = 20
-ALGO_TO_PLAY = "kmeans"  # Options: 'kmeans', 'dbscan', or 'nn'
+ALGO_TO_PLAY = "hc"  #"kmeans", "dbscan", "nn", "hc"
 DISPLAY_SIZE = (500, 500) #upscale to 500x500 for visibility
 
 # --- LOAD DATA ---
@@ -54,7 +54,7 @@ for cluster_id in unique_clusters:
         #show frame
         cv2.imshow("Clustered Playback", frame_large)
 
-        #press 'q' to skip to next cluster or exit.
+        #press "q" to skip to next cluster or exit.
         if cv2.waitKey(int(1000/FPS)) & 0xFF == ord('q'):
             break
 
