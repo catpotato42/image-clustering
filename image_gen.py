@@ -6,10 +6,10 @@ from PIL import Image
 # --- CONFIG ---
 NUM_IMAGES = 10
 IMG_SIZE = 500
-OUTPUT_DIR = "temp_images"
-#OUTPUT_DIR = "blob_images"
-DATASET_FILE = "temp_dataset.npy"
-#DATASET_FILE = "clustering_dataset.npy"
+#OUTPUT_DIR = "temp_images"
+OUTPUT_DIR = "blob_images"
+#DATASET_FILE = "temp_dataset.npy"
+DATASET_FILE = "clustering_dataset.npy"
 NOISE_SMOOTHNESS = 2.0
 
 # --- SETUP ---
@@ -36,10 +36,10 @@ def generate_localized_noise_blob(size, smoothness):
 
     intensity = mask * smooth_noise
     # 1. STATIC BACKGROUND
-    bg = np.random.randint(0, 100, (size, size, 3)) * (1 - mask)[:, :, np.newaxis] 
+    #bg = np.random.randint(0, 100, (size, size, 3)) * (1 - mask)[:, :, np.newaxis] 
     
     # 2. BLACK BACKGROUND 
-    #bg = np.zeros((size, size, 3))
+    bg = np.zeros((size, size, 3))
 
     img = np.zeros((size, size, 3))
     for i in range(3):
