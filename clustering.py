@@ -38,7 +38,7 @@ autoencoder.fit(data_scaled, data_scaled, epochs=15, batch_size=256, verbose=0)
 encoder = tf.keras.Model(inputs=input_layer, outputs=bottleneck)
 encoded_features = encoder.predict(data_scaled)
 
-nn_labels = KMeans(n_clusters=N_CLUSTERS, n_init=10).fit_predict(encoded_features)
+encoded_labels = KMeans(n_clusters=N_CLUSTERS, n_init=10).fit_predict(encoded_features)
 
 #hierarchical clustering
 hc = AgglomerativeClustering(
@@ -61,12 +61,12 @@ def get_score(name, labels):
 
 get_score("K-Means", kmeans_labels)
 get_score("DBSCAN", dbscan_labels)
-get_score("K-Means Encoded", nn_labels)
+get_score("K-Means Encoded", encoded_labels)
 get_score("Hierarchical", hc_labels)
 
 #save
 np.savez("cluster_results.npz", 
          kmeans=kmeans_labels, 
          dbscan=dbscan_labels, 
-         kmeansenc=nn_labels, 
+         kmeansenc=encoded_labels, 
          hc=hc_labels)
