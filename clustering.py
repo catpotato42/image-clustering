@@ -21,7 +21,7 @@ kmeans_labels = kmeans.fit_predict(data_scaled)
 dbscan = DBSCAN(eps=40, min_samples=5) 
 dbscan_labels = dbscan.fit_predict(data_scaled)
 
-#nn
+#k-means encoded
 input_dim = data_scaled.shape[1]
 encoding_dim = 16 
 
@@ -37,6 +37,7 @@ autoencoder.fit(data_scaled, data_scaled, epochs=15, batch_size=256, verbose=0)
 
 encoder = tf.keras.Model(inputs=input_layer, outputs=bottleneck)
 encoded_features = encoder.predict(data_scaled)
+
 nn_labels = KMeans(n_clusters=N_CLUSTERS, n_init=10).fit_predict(encoded_features)
 
 #hierarchical clustering
@@ -60,12 +61,12 @@ def get_score(name, labels):
 
 get_score("K-Means", kmeans_labels)
 get_score("DBSCAN", dbscan_labels)
-get_score("Neural Net", nn_labels)
+get_score("K-Means Encoded", nn_labels)
 get_score("Hierarchical", hc_labels)
 
 #save
 np.savez("cluster_results.npz", 
          kmeans=kmeans_labels, 
          dbscan=dbscan_labels, 
-         nn=nn_labels, 
+         kmeansenc=nn_labels, 
          hc=hc_labels)

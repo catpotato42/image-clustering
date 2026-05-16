@@ -4,8 +4,8 @@ from scipy.ndimage import gaussian_filter
 from PIL import Image
 
 # --- CONFIG ---
-NUM_IMAGES = 10
-IMG_SIZE = 500
+NUM_IMAGES = 10000
+IMG_SIZE = 30
 #OUTPUT_DIR = "temp_images"
 OUTPUT_DIR = "blob_images"
 #DATASET_FILE = "temp_dataset.npy"

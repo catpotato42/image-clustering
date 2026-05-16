@@ -6,7 +6,7 @@ import os
 RESULTS_FILE = "cluster_results.npz"
 IMG_DIR = "blob_images"
 FPS = 20
-ALGO_TO_PLAY = "hc"  #"kmeans", "dbscan", "nn", "hc"
+ALGO_TO_PLAY = "kmeansenc"  #"kmeans", "dbscan", "kmeansenc", "hc"
 DISPLAY_SIZE = (500, 500) #upscale to 500x500 for visibility
 
 # --- LOAD DATA ---
